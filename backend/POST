@@ -1,0 +1,5 @@
+http://127.0.0.1:5001/api/convert
+{ 
+   "text": "안녕하세요, Gemini CLI 사용법을 알려주세요.",
+   "target":"동료"	
+}
