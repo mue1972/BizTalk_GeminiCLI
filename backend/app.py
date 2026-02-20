@@ -1,13 +1,16 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from dotenv import load_dotenv
+
+# Get the absolute path to the frontend directory
+frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend'))
 # from groq import Groq
 
 # .env 파일에서 환경 변수 로드
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=frontend_dir, static_url_path='/')
 # CORS 설정: 모든 도메인에서 오는 요청을 허용합니다. 
 # 실제 프로덕션 환경에서는 특정 도메인만 허용하도록 수정해야 합니다.
 CORS(app)
@@ -16,6 +19,19 @@ CORS(app)
 # client = Groq(
 #     api_key=os.environ.get("GROQ_API_KEY"),
 # )
+
+@app.route('/')
+def serve_index():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/<path:filename>')
+def serve_static(filename):
+    if filename != 'index.html': # Don't serve index.html via this route to prevent conflicts
+        return send_from_directory(app.static_folder, filename)
+    else:
+        # If somehow index.html is requested via this route, redirect to root or handle as error
+        # For simplicity, we'll let the serve_index() handle it
+        pass
 
 @app.route('/api/convert', methods=['POST'])
 def convert_tone():
