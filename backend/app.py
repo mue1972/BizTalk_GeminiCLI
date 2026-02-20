@@ -10,7 +10,7 @@ frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'fr
 # .env 파일에서 환경 변수 로드
 load_dotenv()
 
-app = Flask(__name__, static_folder=frontend_dir, static_url_path='/')
+app = Flask(__name__, static_folder=frontend_dir, static_url_path='')
 # CORS 설정: 모든 도메인에서 오는 요청을 허용합니다. 
 # 실제 프로덕션 환경에서는 특정 도메인만 허용하도록 수정해야 합니다.
 CORS(app)
@@ -22,16 +22,9 @@ CORS(app)
 
 @app.route('/')
 def serve_index():
-    return send_from_directory(app.static_folder, 'index.html')
+    return app.send_static_file('index.html')
 
-@app.route('/<path:filename>')
-def serve_static(filename):
-    if filename != 'index.html': # Don't serve index.html via this route to prevent conflicts
-        return send_from_directory(app.static_folder, filename)
-    else:
-        # If somehow index.html is requested via this route, redirect to root or handle as error
-        # For simplicity, we'll let the serve_index() handle it
-        pass
+
 
 @app.route('/api/convert', methods=['POST'])
 def convert_tone():
@@ -57,4 +50,4 @@ def convert_tone():
 
 if __name__ == '__main__':
     # 디버그 모드로 Flask 앱을 실행합니다.
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5000)
