@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizTone Converter</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>BizTone Converter - 업무 말투 자동 변환 솔루션</h1>
+        <div class="content-wrapper">
+            <div class="input-section card">
+                <h2>원문 입력</h2>
+                <textarea id="inputText" placeholder="변환할 내용을 입력하세요." maxlength="500"></textarea>
+                <div class="char-count" id="charCount">0/500</div>
+                <div class="persona-selection">
+                    <h3>수신자 선택:</h3>
+                    <div class="radio-group">
+                        <input type="radio" id="personaBoss" name="persona" value="상사" checked>
+                        <label for="personaBoss">상사 (Upward)</label>
+                        <input type="radio" id="personaColleague" name="persona" value="타팀 동료">
+                        <label for="personaColleague">타팀 동료 (Lateral)</label>
+                        <input type="radio" id="personaCustomer" name="persona" value="고객">
+                        <label for="personaCustomer">고객 (External)</label>
+                    </div>
+                </div>
+                <button id="convertButton">변환하기</button>
+            </div>
+            <div class="output-section card">
+                <h2>변환 결과</h2>
+                <textarea id="outputText" readonly placeholder="변환 결과가 여기에 표시됩니다."></textarea>
+                <button id="copyButton">복사하기</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>
